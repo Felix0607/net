@@ -1,0 +1,62 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@model net.ViewModel.UserViewModel 
+@inject IViewLocalizer ViewLocalizer
+
+CurrentCulture:@CultureInfo.CurrentCulture.Name <br/>
+CurrentUICulture:@CultureInfo.CurrentUICulture.Name <br/>
+
+
+<h1>@ViewLocalizer["newMember"]</h1>
+<div class="text-center">
+    @using (Html.BeginForm("CreateUser", "User", FormMethod.Post, new { role = "form"}))
+    {
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="">@ViewLocalizer["Name"] </label>
+            @Html.EditorFor(x => x.User.Name, new { htmlAttributes = new { @class = "form-control ", @id = "Name" } })
+        </div>
+        <div class="form-group">
+            <label for="">@ViewLocalizer["Phone"] </label>
+            @Html.EditorFor(x => x.User.Phone, new { htmlAttributes = new { @class = "form-control ", @id = "Phone" } })
+        </div>
+        <div class="form-group">
+            <label for="">@ViewLocalizer["Email"] </label>
+            @Html.EditorFor(x => x.User.Email, new { htmlAttributes = new { @class = "form-control ", @id = "Email" }
+            })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn-black"><i class="ion-ios-search-strong"></i> @ViewLocalizer["Send"] </button>
+        </div>
+    </div>
+    }
+    <br>
+    <table border="1">
+        <tr>
+            <td colspan="3">@ViewLocalizer["UserData"]</td>
+        </tr>
+    @if(Model.UserList.Count.Equals(0)){
+        <tr>
+            <td colspan="3">@ViewLocalizer["Send"]</td>
+        </tr>
+    }
+    else{
+        <tr>
+            <td>@ViewLocalizer["Name"]</td>
+            <td>@ViewLocalizer["Phone"]</td>
+            <td>@ViewLocalizer["Email"]</td>
+        </tr>
+        foreach (var item in Model.UserList)
+        {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Phone</td>
+            <td>@item.Email</td>
+        </tr>
+        }
+    }
+
+    </table>
+
+</div>
+
